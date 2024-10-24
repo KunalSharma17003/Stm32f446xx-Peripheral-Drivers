@@ -96,40 +96,40 @@ The drivers provided in this project allow you to easily interface with peripher
 
 ### Example: GPIO Configuration
 ```c
-// Include the header files
-#include "gpio.h"
-#include "rcc.h"
+//Include the header files
+#include "stm32f446xx.h"
+#include "stm32f446xx_gpio_driver.h"
 
-int main(void) {
-    // Enable the clock for GPIOA
-    RCC_EnableClock(GPIOA);
+void Delay(void)
+{
+	for(uint32_t i = 0; i<500000/2 ; i++);
+}
 
-    // Configure PA5 as output
-    GPIO_Config(GPIOA, 5, GPIO_MODE_OUTPUT, GPIO_NOPULL, GPIO_SPEED_HIGH);
-    
-    // Toggle PA5
-    while(1) {
-        GPIO_TogglePin(GPIOA, 5);
-        Delay(1000);  // Custom delay function
-    }
+int main(void)
+{
+	GPIO_Handle_t GpioLed;
+	GpioLed.pGPIOx = GPIOA;
+	GpioLed.GPIO_PinConfig_t.GPIO_PinNumber = GPIO_PIN_5;
+	GpioLed.GPIO_PinConfig_t.GPIO_PinMode =GPIO_MODE_OUT;
+	GpioLed.GPIO_PinConfig_t.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GpioLed.GPIO_PinConfig_t.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	GpioLed.GPIO_PinConfig_t.GPIO_PinPuPdControl = GPIO_PIN_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOA,ENABLE);
+	GPIO_Init(&GpioLed);
+	while(1)
+	{
+
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_5);
+		Delay();
+
+	}
+	return 0;
 }
 ```
 
-### Example: UART Configuration
-```c
-#include "uart.h"
 
-int main(void) {
-    // Initialize UART2 with a baud rate of 9600
-    UART_Init(UART2, 9600);
-    
-    // Transmit a message
-    char msg[] = "Hello, UART!";
-    UART_Transmit(UART2, msg, sizeof(msg));
-    
-    while(1);
-}
-```
+
 
 ## Contributing
 Contributions to improve existing drivers or add new peripheral drivers are welcome. Please fork the repository and submit a pull request with detailed explanations of your changes.
@@ -138,5 +138,3 @@ Contributions to improve existing drivers or add new peripheral drivers are welc
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ---
-
-This README file provides a clear structure and instructions for your repository. You can modify it to suit your exact setup or needs.
