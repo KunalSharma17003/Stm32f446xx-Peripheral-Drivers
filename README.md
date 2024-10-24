@@ -1,5 +1,3 @@
-Here’s a sample README file for your GitHub project:
-
 ---
 
 # STM32F446RE Peripheral Driver Development
@@ -83,8 +81,7 @@ This project is ideal for those interested in gaining a deeper understanding of 
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/stm32f446re-drivers.git
-   cd stm32f446re-drivers
+   git clone (https://github.com/KunalSharma17003/Stm32f446xx-Peripheral-Drivers.git)
    ```
 
 2. Open the project in your development environment (e.g., STM32CubeIDE).
